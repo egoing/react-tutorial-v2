@@ -25,11 +25,11 @@ function Nav(){
       </nav>
   );
 }
-function Article(){
+function Article(props){
   return (
     <article>
-          <h2>Welcome</h2>
-          Hello, WEB!
+          <h2>{props.title}</h2>
+          {props.description}
       </article>
   );
 }
@@ -38,7 +38,7 @@ function App() {
     <div>
       <Header></Header>    
       <Nav></Nav>
-      <Article></Article>
+      <Article title="Welcome!!" description="Hello, WEB!!"></Article>
     </div>
   );
 }
