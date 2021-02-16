@@ -1,13 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+function Header(){
   return (
-    <div>
-      <header>
+    <header>
       <h1>WEB</h1>
-      </header>
-      <nav>
+    </header>
+  );
+}
+function Nav(){
+  return (
+        <nav>
           <ul>
               <li>
               <a href="/1">html</a>
@@ -20,10 +23,22 @@ function App() {
               </li>
           </ul>
       </nav>
-      <article>
+  );
+}
+function Article(){
+  return (
+    <article>
           <h2>Welcome</h2>
           Hello, WEB!
       </article>
+  );
+}
+function App() {
+  return (
+    <div>
+      <Header></Header>    
+      <Nav></Nav>
+      <Article></Article>
     </div>
   );
 }
