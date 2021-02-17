@@ -18,7 +18,7 @@ function Nav(props){
     lis.push(
       <li key={d.id}>
         <a data-id={d.id} onClick={function(e){
-          props.onChangeMode(e.target.dataset.id);
+          props.onChangeMode(Number(e.target.dataset.id));
           e.preventDefault();
         }}
             href={'/'+d.id}>{d.title}</a>
@@ -42,11 +42,22 @@ function Article(props){
 }
 function App() {
   const [mode, setMode] = useState('READ');
+  const [selectedId, setSelectedId] = useState(null);
+  var topics = [
+    {id:1, title:'html', description:'html is ...'},
+    {id:2, title:'css', description:'css is ...'},
+    {id:3, title:'javascript', description:'js is ...'}
+  ];
   var article = null;
   if(mode === 'WELCOME'){
     article = <Article title="Welcome!!" description="Hello, WEB!!"></Article>;
   } else if(mode === 'READ'){
-    article = <Article title="READ!!" description="Hello, WEB!!"></Article>
+    for(var i=0; i<topics.length; i++){
+      var d = topics[i];
+      if(d.id === selectedId){
+        article = <Article title={d.title} description={d.description}></Article>
+      }
+    }
   }
   return (
     <div>
@@ -58,12 +69,9 @@ function App() {
       onChangeMode={function(topic_id){
         console.log('Nav!!!', topic_id);
         setMode('READ');
+        setSelectedId(topic_id);
       }}
-      data={[
-        {id:1, title:'html', description:'html is ...'},
-        {id:2, title:'css', description:'css is ...'},
-        {id:3, title:'javascript', description:'js is ...'}
-      ]}></Nav>
+      data={topics}></Nav>
       {article}
     </div>
   );
