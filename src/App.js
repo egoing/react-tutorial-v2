@@ -8,19 +8,19 @@ function Header(){
     </header>
   );
 }
-function Nav(){
+function Nav(props){
+  var lis = [];
+  for(var i=0; i<props.data.length; i++){
+    var d = props.data[i];
+    lis.push(
+      <li key={d.id}>
+        <a href={'/'+d.id}>{d.title}</a>
+      </li>);
+  }
   return (
         <nav>
           <ul>
-              <li>
-              <a href="/1">html</a>
-              </li>
-              <li>
-              <a href="/2">css</a>
-              </li>
-              <li>
-              <a href="/3">javascript</a>
-              </li>
+              {lis}
           </ul>
       </nav>
   );
@@ -37,7 +37,11 @@ function App() {
   return (
     <div>
       <Header></Header>    
-      <Nav></Nav>
+      <Nav data={[
+        {id:1, title:'html', description:'html is ...'},
+        {id:2, title:'css', description:'css is ...'},
+        {id:3, title:'javascript', description:'js is ...'}
+      ]}></Nav>
       <Article title="Welcome!!" description="Hello, WEB!!"></Article>
     </div>
   );
