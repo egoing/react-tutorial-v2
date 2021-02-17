@@ -17,7 +17,11 @@ function Nav(props){
     var d = props.data[i];
     lis.push(
       <li key={d.id}>
-        <a href={'/'+d.id}>{d.title}</a>
+        <a data-id={d.id} onClick={function(e){
+          props.onChangeMode(e.target.dataset.id);
+          e.preventDefault();
+        }}
+            href={'/'+d.id}>{d.title}</a>
       </li>);
   }
   return (
@@ -43,7 +47,12 @@ function App() {
         console.log('Header!!!');
         // Article 영역에 Welcome 페이지를 출력한다. 
       }}></Header>    
-      <Nav data={[
+      <Nav 
+      onChangeMode={function(topic_id){
+        console.log('Nav!!!', topic_id);
+        // Nav 영역에 Welcome 페이지를 출력한다. 
+      }}
+      data={[
         {id:1, title:'html', description:'html is ...'},
         {id:2, title:'css', description:'css is ...'},
         {id:3, title:'javascript', description:'js is ...'}
