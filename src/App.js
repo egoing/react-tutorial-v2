@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-
+import {useState} from 'react';
 function Header(props){
   return (
     <header>
@@ -41,23 +41,30 @@ function Article(props){
   );
 }
 function App() {
+  const [mode, setMode] = useState('READ');
+  var article = null;
+  if(mode === 'WELCOME'){
+    article = <Article title="Welcome!!" description="Hello, WEB!!"></Article>;
+  } else if(mode === 'READ'){
+    article = <Article title="READ!!" description="Hello, WEB!!"></Article>
+  }
   return (
     <div>
       <Header onChangeMode={function(){
         console.log('Header!!!');
-        // Article 영역에 Welcome 페이지를 출력한다. 
+        setMode('WELCOME');
       }}></Header>    
       <Nav 
       onChangeMode={function(topic_id){
         console.log('Nav!!!', topic_id);
-        // Nav 영역에 Welcome 페이지를 출력한다. 
+        setMode('READ');
       }}
       data={[
         {id:1, title:'html', description:'html is ...'},
         {id:2, title:'css', description:'css is ...'},
         {id:3, title:'javascript', description:'js is ...'}
       ]}></Nav>
-      <Article title="Welcome!!" description="Hello, WEB!!"></Article>
+      {article}
     </div>
   );
 }
