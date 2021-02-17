@@ -1,10 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 
-function Header(){
+function Header(props){
   return (
     <header>
-      <h1>WEB</h1>
+      <h1><a href="/" onClick={function(e){
+        e.preventDefault();
+        props.onChangeMode();
+      }}>WEB</a></h1>
     </header>
   );
 }
@@ -36,7 +39,10 @@ function Article(props){
 function App() {
   return (
     <div>
-      <Header></Header>    
+      <Header onChangeMode={function(){
+        console.log('Header!!!');
+        // Article 영역에 Welcome 페이지를 출력한다. 
+      }}></Header>    
       <Nav data={[
         {id:1, title:'html', description:'html is ...'},
         {id:2, title:'css', description:'css is ...'},
