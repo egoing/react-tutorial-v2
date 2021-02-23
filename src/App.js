@@ -64,7 +64,9 @@ function Article(props){
       </article>
   );
 }
+
 function App() {
+  const [nextId, setNextId] = useState(4);
   const [mode, setMode] = useState('READ');
   const [selectedId, setSelectedId] = useState(null);
   const [topics, setTopics] = useState([
@@ -84,12 +86,14 @@ function App() {
     }
   } else if(mode === 'CREATE'){
     article = <Create onSubmit={function(data){
-      console.log('data', data);
       var newTopics = [...topics];
       newTopics.push(
-        {id:0, title:data.title, description:data.description}
+        {id:nextId, title:data.title, description:data.description}
       );
-      setTopics(newTopics);
+      setTopics(newTopics);      
+      setMode('READ');
+      setSelectedId(nextId);
+      setNextId(nextId+1);
     }}></Create>
   }
   return (
