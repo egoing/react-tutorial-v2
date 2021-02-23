@@ -40,6 +40,22 @@ function Control(props){
     }}>create</a></li>
   </ul>
 }
+function Create(props){
+  return <article>
+    <h1>Create</h1>
+    <form action="/topics/create" method="POST" onSubmit={function(e){
+      e.preventDefault();
+      props.onSubmit({
+        title:e.target.title.value,
+        description:e.target.description.value
+      })
+    }}>
+      <p><input type="text" name="title" placeholder="title"></input></p>
+      <p><textarea name="description" placeholder="description"></textarea></p>
+      <p><input type="submit"></input></p>
+    </form>
+  </article>
+}
 function Article(props){
   return (
     <article>
@@ -67,7 +83,9 @@ function App() {
       }
     }
   } else if(mode === 'CREATE'){
-    article = <div>hi</div>
+    article = <Create onSubmit={function(data){
+      console.log('data', data);
+    }}></Create>
   }
   return (
     <div>
