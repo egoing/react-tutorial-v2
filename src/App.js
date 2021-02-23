@@ -67,11 +67,11 @@ function Article(props){
 function App() {
   const [mode, setMode] = useState('READ');
   const [selectedId, setSelectedId] = useState(null);
-  var topics = [
+  const [topics, setTopics] = useState([
     {id:1, title:'html', description:'html is ...'},
     {id:2, title:'css', description:'css is ...'},
     {id:3, title:'javascript', description:'js is ...'}
-  ];
+  ]);
   var article = null;
   if(mode === 'WELCOME'){
     article = <Article title="Welcome!!" description="Hello, WEB!!"></Article>;
@@ -85,6 +85,11 @@ function App() {
   } else if(mode === 'CREATE'){
     article = <Create onSubmit={function(data){
       console.log('data', data);
+      var newTopics = [...topics];
+      newTopics.push(
+        {id:0, title:data.title, description:data.description}
+      );
+      setTopics(newTopics);
     }}></Create>
   }
   return (
