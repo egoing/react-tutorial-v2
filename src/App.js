@@ -32,6 +32,14 @@ function Nav(props){
       </nav>
   );
 }
+function Control(props){
+  return <ul>
+    <li><a href="/create/topics" onClick={function(e){
+      e.preventDefault();
+      props.onChangeMode('CREATE');
+    }}>create</a></li>
+  </ul>
+}
 function Article(props){
   return (
     <article>
@@ -58,6 +66,8 @@ function App() {
         article = <Article title={d.title} description={d.description}></Article>
       }
     }
+  } else if(mode === 'CREATE'){
+    article = <div>hi</div>
   }
   return (
     <div>
@@ -73,6 +83,10 @@ function App() {
       }}
       data={topics}></Nav>
       {article}
+      <Control onChangeMode={function(mode){
+        console.log('mode', mode);
+        setMode(mode);
+      }}></Control>
     </div>
   );
 }
