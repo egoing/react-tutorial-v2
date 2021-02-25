@@ -34,10 +34,14 @@ function Nav(props){
 }
 function Control(props){
   return <ul>
-    <li><a href="/create/topics" onClick={function(e){
+    <li><a href="/topics/create" onClick={function(e){
       e.preventDefault();
       props.onChangeMode('CREATE');
     }}>create</a></li>
+    <li><a href="/topics/update" onClick={function(e){
+      e.preventDefault();
+      props.onChangeMode('UPDATE');
+    }}>update</a></li>
   </ul>
 }
 function Create(props){
@@ -52,6 +56,41 @@ function Create(props){
     }}>
       <p><input type="text" name="title" placeholder="title"></input></p>
       <p><textarea name="description" placeholder="description"></textarea></p>
+      <p><input type="submit"></input></p>
+    </form>
+  </article>
+}
+function Update(props){
+  const [title, setTitle] = useState(props.title);
+  const [description, setDescription] = useState(props.description);
+  return <article>
+    <h1>Update</h1>
+    <form action="/topics/create" method="POST" onSubmit={function(e){
+      e.preventDefault();
+      props.onSubmit({
+        title:e.target.title.value,
+        description:e.target.description.value
+      })
+    }}>
+      <p>
+        <input 
+          type="text" 
+          name="title" 
+          placeholder="title"
+          value={title}
+          onChange={function(e){
+            setTitle(e.target.value);
+          }}
+          ></input></p>
+      <p>
+        <textarea 
+          name="description" 
+          placeholder="description"
+          value={description}
+          onChange={function(e){
+            setDescription(e.target.value);
+          }}
+        ></textarea></p>
       <p><input type="submit"></input></p>
     </form>
   </article>
@@ -95,7 +134,29 @@ function App() {
       setSelectedId(nextId);
       setNextId(nextId+1);
     }}></Create>
-  }
+  } else if(mode === 'UPDATE'){
+    for(var i=0; i<topics.length; i++){
+      var d = topics[i];
+      if(d.id === selectedId){
+        article = <Update 
+          title={d.title}
+          description={d.description}
+          onSubmit={function(data){
+            var newTopics = [...topics];
+            for(var i=0; i<newTopics.length; i++){
+              var d = newTopics[i];
+              if(d.id === selectedId){
+                newTopics[i] = {id:selectedId, title:data.title, description:data.description};
+                break;
+              }
+            }
+            setTopics(newTopics);
+            setMode('READ');
+        }}></Update>
+      }
+    }
+    
+  } 
   return (
     <div>
       <Header onChangeMode={function(){
