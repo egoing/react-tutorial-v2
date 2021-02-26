@@ -42,6 +42,9 @@ function Control(props){
       e.preventDefault();
       props.onChangeMode('UPDATE');
     }}>update</a></li>
+    <li><input type="button" value="delete" onClick={function(){
+      props.onChangeMode('DELETE');
+    }}/></li>
   </ul>
 }
 function Create(props){
@@ -173,6 +176,21 @@ function App() {
       {article}
       <Control onChangeMode={function(mode){
         console.log('mode', mode);
+        if(mode === 'DELETE'){
+          if(window.confirm('Really?')){
+            var newTopics = [];
+            for(var i=0; i<topics.length; i++){
+              var d = topics[i];
+              if(d.id !== selectedId){
+                newTopics.push(d);
+              }
+            }
+            setTopics(newTopics);
+            mode = 'WELCOME';
+          } else {
+            mode = 'READ';
+          }
+        }
         setMode(mode);
       }}></Control>
     </div>
