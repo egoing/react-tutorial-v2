@@ -1,111 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState} from 'react';
-function Header(props){
-  return (
-    <header>
-      <h1><a href="/" onClick={function(e){
-        e.preventDefault();
-        props.onChangeMode();
-      }}>WEB</a></h1>
-    </header>
-  );
-}
-function Nav(props){
-  var lis = [];
-  for(var i=0; i<props.data.length; i++){
-    var d = props.data[i];
-    lis.push(
-      <li key={d.id}>
-        <a data-id={d.id} onClick={function(e){
-          props.onChangeMode(Number(e.target.dataset.id));
-          e.preventDefault();
-        }}
-            href={'/'+d.id}>{d.title}</a>
-      </li>);
-  }
-  return (
-        <nav>
-          <ul>
-              {lis}
-          </ul>
-      </nav>
-  );
-}
-function Control(props){
-  return <ul>
-    <li><a href="/topics/create" onClick={function(e){
-      e.preventDefault();
-      props.onChangeMode('CREATE');
-    }}>create</a></li>
-    <li><a href="/topics/update" onClick={function(e){
-      e.preventDefault();
-      props.onChangeMode('UPDATE');
-    }}>update</a></li>
-    <li><input type="button" value="delete" onClick={function(){
-      props.onChangeMode('DELETE');
-    }}/></li>
-  </ul>
-}
-function Create(props){
-  return <article>
-    <h1>Create</h1>
-    <form action="/topics/create" method="POST" onSubmit={function(e){
-      e.preventDefault();
-      props.onSubmit({
-        title:e.target.title.value,
-        description:e.target.description.value
-      })
-    }}>
-      <p><input type="text" name="title" placeholder="title"></input></p>
-      <p><textarea name="description" placeholder="description"></textarea></p>
-      <p><input type="submit"></input></p>
-    </form>
-  </article>
-}
-function Update(props){
-  const [title, setTitle] = useState(props.title);
-  const [description, setDescription] = useState(props.description);
-  return <article>
-    <h1>Update</h1>
-    <form action="/topics/create" method="POST" onSubmit={function(e){
-      e.preventDefault();
-      props.onSubmit({
-        title:e.target.title.value,
-        description:e.target.description.value
-      })
-    }}>
-      <p>
-        <input 
-          type="text" 
-          name="title" 
-          placeholder="title"
-          value={title}
-          onChange={function(e){
-            setTitle(e.target.value);
-          }}
-          ></input></p>
-      <p>
-        <textarea 
-          name="description" 
-          placeholder="description"
-          value={description}
-          onChange={function(e){
-            setDescription(e.target.value);
-          }}
-        ></textarea></p>
-      <p><input type="submit"></input></p>
-    </form>
-  </article>
-}
-function Article(props){
-  return (
-    <article>
-          <h2>{props.title}</h2>
-          {props.description}
-      </article>
-  );
-}
+import Header from './components/Header';
+import Nav from './components/Nav';
+import Control from './components/Control';
+import Create from './components/Create';
+import Update from './components/Update';
+import Article from './components/Article';
 
 function App() {
   const [nextId, setNextId] = useState(4);
